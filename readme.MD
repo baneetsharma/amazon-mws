@@ -4,6 +4,21 @@
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FQG5EWN987PJW)
 
 Interaction with the Amazon Api for vendors called MWS
+### Change your composer.json file
+```bash
+"require": {
+    // ...
+    "mcs/amazon-mws": "*",
+    // ...
+},
+"repositories": [
+    {
+        "name": "mcs/amazon-mws",
+        "type": "git",
+        "url": "git@github.com:baneetsharma/amazon-mws.git"
+    }
+]
+```
 
 ### Installation:
 ```bash
