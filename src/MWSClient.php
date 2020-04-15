@@ -1096,7 +1096,9 @@ class MWSClient{
             $result = $this->request('GetReport', [
                 'ReportId' => $status['GeneratedReportId']
             ]);
-
+            
+            $result = $this->returnXmlToArrayResult($result);
+            
             if (is_string($result)) {
                 $csv = Reader::createFromString($result);
                 $csv->setDelimiter("\t");
@@ -1291,5 +1293,30 @@ class MWSClient{
     
     public function setClient(Client $client) {
         $this->client = $client;
+    }
+    
+    public function returnXmlToArrayResult($result) {
+
+        if ($this->isValidXml($result)) {
+
+            $xml = simplexml_load_string($result, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $result = json_decode(json_encode($xml), true);
+            $this->returnXmlToArrayResult($result);
+        }
+        return $result;
+    }
+
+    public function isValidXml($content) {
+
+        if (empty($content) || is_array($content)) {
+            return false;
+        }
+
+        $xml = simplexml_load_string($content);
+        if ($xml === false) {
+            return false;
+        }
+
+        return true;
     }
 }
